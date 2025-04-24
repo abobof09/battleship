@@ -32,10 +32,31 @@ class Game:
             if location['col'] in num_rows:
                 self.coords = []
                 for x in range(size):
-                    if location['row'] + x in num_cols
+                    if location['row'] + x in range(num_cols):
+                        self.coords.append({'row': location['row'] + x, 'col': location['col']})
+                    else:
+                        raise IndexError("Column does not exist.")
+                else:
+                    raise IndexError("Row does not exist.")
+        if self.filled():
+            print_board(board)
+            print(" ".join(str(coords) for coords in self.coordinates))
+            raise IndexError("A ship already occupies that space.")
+        else:
+            self.fillBoard()
 
+    def filled(self):
+        for coords in self.coordinates:
+            if board[coords['row']][coords['col']] == 1:
+                return True
+        return False
+  
+    def fillBoard(self):
+        for coords in self.coordinates:
+            board[coords['row']][coords['col']] = 1
 
 
 # to avoid errors (size of the board):
 num_cols = 10
 num_rows = 10
+board = [[0] * num_rows for x in range(num_cols)]
