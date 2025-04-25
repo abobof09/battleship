@@ -114,15 +114,15 @@ def print_board(board):
         print(str(r + 1) + " " + " ".join(str(c) for c in board[r]))
     print()
 
-def locate_ship(size, direction):
+def search_coordinates(size, direction):
     """
-    A function that checks to see if a selected coordinate contains a ship.
+    A function that looks for valid spots for a ship to be placed.
     Args:
         size: the size of the ship (seen in the Game class)
         direction: the direction the ship is facing (seen in the Game class)
     Returns:
-        None: if there is no ship present
-        locations: a list containing the coordinates if there is a ship present
+        None: if there is no valid location
+        locations: a list containing the coordinates of the viable locations
     """
     locations = []
 
@@ -145,3 +145,13 @@ def locate_ship(size, direction):
         return 'None'
     else:
         return locations
+
+def random_location():
+    size = randint(min_ship_size, max_ship_size)
+    orientation = 'horizontal' if randint(0, 1) == 0 else 'vertical'
+    locations = s(size, orientation)
+    if locations == 'None':
+        return 'None'
+    else:
+        return {'location': locations[randint(0, len(locations) - 1)], 'size': size,\
+                'orientation': orientation}
