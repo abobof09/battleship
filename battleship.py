@@ -113,3 +113,35 @@ def print_board(board):
     for r in range(num_cols):
         print(str(r + 1) + " " + " ".join(str(c) for c in board[r]))
     print()
+
+def locate_ship(size, direction):
+    """
+    A function that checks to see if a selected coordinate contains a ship.
+    Args:
+        size: the size of the ship (seen in the Game class)
+        direction: the direction the ship is facing (seen in the Game class)
+    Returns:
+        None: if there is no ship present
+        locations: a list containing the coordinates if there is a ship present
+    """
+    locations = []
+
+    if direction != 'horizontal' and direction != 'vertical':
+        raise ValueError("Orientation must have a value of either 'horizontal' or 'vertical'.")
+
+    if direction == 'horizontal':
+        if size <= num_rows:
+            for r in range(num_cols):
+                for c in range(num_rows - size + 1):
+                    if 1 not in board[r][c:c+size]:
+                        locations.append({'row': r, 'col': c})
+    elif direction == 'vertical':
+        if size <= num_cols:
+            for c in range(num_rows):
+                for r in range(num_cols - size + 1):
+                    if 1 not in [board[i][c] for i in range(r, r+size)]:
+                        locations.append({'row': r, 'col': c})
+    if not locations:
+        return 'None'
+    else:
+        return locations
