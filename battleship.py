@@ -155,3 +155,25 @@ def random_location():
     else:
         return {'location': locations[randint(0, len(locations) - 1)], 'size': size,\
                 'orientation': orientation}
+    
+def get_row():
+    while True:
+        try:
+            guess = int(input("Row Guess: "))
+            if guess in range(1, num_cols + 1):
+                return guess - 1
+            else:
+                print("Row does not exist.")
+        except ValueError:
+            print("Please enter a number.")
+
+def get_col():
+    while True:
+        try:
+            guess = int(input("Column Guess: "))
+            if guess in range(1, num_rows + 1):
+                return guess - 1
+            else:
+                print("Column does not exist")
+        except ValueError:
+            print("Please enter a number.")
