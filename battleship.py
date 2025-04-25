@@ -84,7 +84,32 @@ class Game:
         return True
 
 
-# to avoid errors (size of the board):
-num_cols = 10
-num_rows = 10
+# Game Settings
+num_cols = 9
+num_rows = 9
+num_ships = 4
+max_ship_size = 5
+min_ship_size = 2
+num_turns = 40
+
+#Create lists
+ship_list = []
+
+# board will be stored as a list for easy adjustments to the indices
 board = [[0] * num_rows for x in range(num_cols)]
+
+board_display = [["O"] * num_rows for x in range(num_cols)]
+
+
+def print_board(board):
+    """
+    Prints the game board to the terminal.
+    Args:
+        board: the game board to be printed
+    Returns:
+        the board printed to the terminal.
+    """
+    print("\n  " + " ".join(str(x) for x in range(1, num_rows + 1)))
+    for r in range(num_cols):
+        print(str(r + 1) + " " + " ".join(str(c) for c in board[r]))
+    print()
