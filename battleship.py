@@ -83,6 +83,11 @@ class Game:
                 raise RuntimeError("Board display inaccurate")
         return True
 
+class Scoreboard:
+    def __init__(self):
+        self.scores = []
+    
+
 
 # Game Settings
 num_cols = 9
@@ -177,3 +182,43 @@ def get_col():
                 print("Column does not exist")
         except ValueError:
             print("Please enter a number.")
+
+# Place the ships on the board
+count = 0
+while count < num_ships:
+    ship_info = random_location()
+    if ship_info == 'None':
+        continue
+    else:
+        ship_list.append(Game(ship_info['size'], ship_info['orientation'], ship_info['location']))
+        count += 1
+del count
+
+# Play the Game
+os.system('clear')
+print_board(board_display)
+
+for i in range(num_turns):
+    print("Turn:", i + 1, "of", num_turns)
+    print("Ships left:", len(ship_list))
+    print()
+
+    coordinates = {}
+    while True:
+        coordinates['row'] = get_row()
+        coordinates['col'] = get_col() 
+        if board_display[coordinates['row']][coordinates['col']] == 'X' or board_display[coordinates['row']][coordinates['col']] == '*':
+            print("You already sttacked that space!")
+        else:
+            break
+    os.system('clear')
+    ship_hit = False
+    for s in ship_list:
+        if s.contains(coordinates):
+            print("Hit!")
+            ship_hit = True
+            board_display[coordinates['row']][coordinates['col']] = 'X'
+            if s.destroyed():
+                print("Ship was destroyed!")
+                ship_list.remove(s)
+            break
