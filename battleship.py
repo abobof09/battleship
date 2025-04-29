@@ -222,3 +222,15 @@ for i in range(num_turns):
                 print("Ship was destroyed!")
                 ship_list.remove(s)
             break
+        if not ship_hit:
+            board_display[coordinates['row']][coordinates['col']] = '*'
+            print("You missed!")
+        print_board(board_display)
+        if not ship_list:
+            break
+
+# End the Game
+if ship_list:
+    print("You lose...")
+else:
+    print("You sunk all the ships! You win!")
