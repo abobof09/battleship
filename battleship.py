@@ -19,7 +19,6 @@ class Game:
         # Properly orient the ships based on the parameters
         if direction.lower() == "horizontal":
             if location['row'] in range(num_cols):
-                # List to store the coordinates?
                 self.coords = []
                 for x in range(size):
                     if location['col'] + x in range(num_rows):
@@ -39,7 +38,6 @@ class Game:
                 else:
                     raise IndexError("Row does not exist.")
         if self.filled():
-            # there will eventually be a print_board method
             print_board(board)
             print(" ".join(str(coords) for coords in self.coordinates))
             raise IndexError("A ship already occupies that space.")
@@ -80,7 +78,7 @@ class Game:
             if board_display[coords['row']][coords['col']] == 'O':
                 return False
             elif board_display[coords['row']][coords['col']] == '*':
-                raise RuntimeError("Board display inaccurate")
+                raise RuntimeError("Board display inaccurate.")
         return True
 
 class Scoreboard:
@@ -132,7 +130,7 @@ def search_coordinates(size, direction):
     locations = []
 
     if direction != 'horizontal' and direction != 'vertical':
-        raise ValueError("Orientation must have a value of either 'horizontal' or 'vertical'.")
+        raise ValueError("Orientation must have a value of 'horizontal' or 'vertical'.")
 
     if direction == 'horizontal':
         if size <= num_rows:
@@ -164,7 +162,7 @@ def random_location():
 def get_row():
     while True:
         try:
-            guess = int(input("Row Guess: "))
+            guess = int(input("Row: "))
             if guess in range(1, num_cols + 1):
                 return guess - 1
             else:
@@ -175,7 +173,7 @@ def get_row():
 def get_col():
     while True:
         try:
-            guess = int(input("Column Guess: "))
+            guess = int(input("Column: "))
             if guess in range(1, num_rows + 1):
                 return guess - 1
             else:
@@ -207,8 +205,10 @@ for i in range(num_turns):
     while True:
         coordinates['row'] = get_row()
         coordinates['col'] = get_col() 
-        if board_display[coordinates['row']][coordinates['col']] == 'X' or board_display[coordinates['row']][coordinates['col']] == '*':
-            print("You already sttacked that space!")
+        if board_display[coordinates['row']][coordinates['col']] == 'X':
+            print("You already missed at that space!")
+        elif board_display[coordinates['row']][coordinates['col']] == '*':
+            print("You already hit that space!")
         else:
             break
     os.system('clear')
