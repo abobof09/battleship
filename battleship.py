@@ -1,5 +1,6 @@
 from random import randint # Will allow randomized ship placements
 import os
+import json
 
 class Game:
     def __init__(self, size, direction, location):
@@ -82,12 +83,41 @@ class Game:
         return True
 
 class Scoreboard:
-    def __init__(self):
-        self.scores = []
+    def __init__(self, filename='scoreboard.json'):
+        self.filename = filename
+        self.scores = self.load_scores()
     
+    def load_scores(self):
+        """
+        A method that loads the file into a json.
+        Returns:
 
+        """
+        if os.path.exists(self.filename):
+            with open(self.filename, 'r') as file:
+                return json.load(file)
+        return []
+    
+    def add_score(self, initials, score):
+        self.scores.append({'initials': initials.upper(), 'score': score})
+        for i in range(len(self.scores)):
+            for j in range(0, len(self.scores) - i - 1):
+                if self.scores[j]['score'] > self.scores[j + 1]['score']:
+                    self.scores[j], self.scores[j + 1] = self.scores[j + 1], self.scores[j]
+        self.save_scores()
+
+    def save_scores(self):
+        with open(self.filename, 'w') as file:
+            json.dump(self.scores, file, indent=2)
+
+    def display(self):
+        print("==== Scoreboard =====")
+        for i in self.scores[:10]:
+            print(f"{i['initials']} - {i['score']} turns")
 
 # Game Settings
+scoreboard = Scoreboard()
+
 num_cols = 9
 num_rows = 9
 num_ships = 4
@@ -234,3 +264,6 @@ if ship_list:
     print("You lose...")
 else:
     print("You sunk all the ships! You win!")
+    initials = input("Enter your initials (3 characters): ").strip().upper()[:3]
+    scoreboard.add_score(initials, i + 1)
+    scoreboard.display()
