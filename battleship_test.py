@@ -21,5 +21,13 @@ class TestMethods(unittest.TestCase):
         ]
         self.assertEqual(ship.coords, expected_coords)
 
+    def test_vertical_ship_creation(self):
+        ship = Game(2, 'vertical', {'row': 1, 'col': 4})
+        expected_coords = [
+            {'row': 1, 'col': 4},
+            {'row': 2, 'col': 4}
+        ]
+        self.assertEqual(ship.coords, expected_coords)
+
 if __name__ == "__main__":
     unittest.main()
