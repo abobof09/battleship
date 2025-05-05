@@ -6,11 +6,10 @@ class TestMethods(unittest.TestCase):
         """
         Sets a fresh board up for each individual test.
         """
-        global board, board_display, num_rows, num_cols
-        num_rows = 9
-        num_cols = 9
-        board = [[0 for _ in range(num_rows)] for _ in range(num_cols)]
-        board_display = [["O" for _ in range(num_rows)] for _ in range(num_cols)]
+        self.num_rows = 9
+        self.num_cols = 9
+        self.board = [[0 for _ in range(num_rows)] for _ in range(num_cols)]
+        self.board_display = [["O" for _ in range(num_rows)] for _ in range(num_cols)]
 
     def test_horizontal_ship_creation(self):
         ship = Game(3, 'horizontal', {'row': 2, 'col': 1})
