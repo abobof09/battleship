@@ -28,5 +28,9 @@ class TestMethods(unittest.TestCase):
         ]
         self.assertEqual(ship.coords, expected_coords)
 
+    def test_filled_returns_false_on_empty(self):
+        ship = Game(2, 'horizontal', {'row': 0, 'col': 0})
+        self.assertFalse(ship.filled())
+
 if __name__ == "__main__":
     unittest.main()
