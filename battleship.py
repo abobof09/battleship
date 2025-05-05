@@ -182,7 +182,7 @@ def search_coords(size, direction):
 def random_location():
     size = randint(min_ship_size, max_ship_size)
     orientation = 'horizontal' if randint(0, 1) == 0 else 'vertical'
-    locations = s(size, orientation)
+    locations = search_coords(size, orientation)
     if locations == 'None':
         return 'None'
     else:
