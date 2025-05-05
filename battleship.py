@@ -29,7 +29,7 @@ class Game:
             else:
                 raise IndexError("The row does not exist.")
         elif direction.lower() == "vertical":
-            if location['col'] in num_rows:
+            if location['col'] in range(num_rows):
                 self.coords = []
                 for x in range(size):
                     if location['row'] + x in range(num_cols):
@@ -211,59 +211,60 @@ def get_col():
         except ValueError:
             print("Please enter a number.")
 
-# Place the ships on the board
-count = 0
-while count < num_ships:
-    ship_info = random_location()
-    if ship_info == 'None':
-        continue
-    else:
-        ship_list.append(Game(ship_info['size'], ship_info['orientation'], ship_info['location']))
-        count += 1
-del count
-
-# Play the Game
-os.system('clear')
-print_board(board_display)
-
-for i in range(num_turns):
-    print("Turn:", i + 1, "of", num_turns)
-    print("Ships left:", len(ship_list))
-    print()
-
-    coords = {}
-    while True:
-        coords['row'] = get_row()
-        coords['col'] = get_col() 
-        if board_display[coords['row']][coords['col']] == 'X':
-            print("You already missed at that space!")
-        elif board_display[coords['row']][coords['col']] == '*':
-            print("You already hit that space!")
+if __name__ == "__main__":
+    # Place the ships on the board
+    count = 0
+    while count < num_ships:
+        ship_info = random_location()
+        if ship_info == 'None':
+            continue
         else:
-            break
-    os.system('clear')
-    ship_hit = False
-    for s in ship_list:
-        if s.contains(coords):
-            print("Hit!")
-            ship_hit = True
-            board_display[coords['row']][coords['col']] = 'X'
-            if s.destroyed():
-                print("Ship was destroyed!")
-                ship_list.remove(s)
-            break
-        if not ship_hit:
-            board_display[coords['row']][coords['col']] = '*'
-            print("You missed!")
-        print_board(board_display)
-        if not ship_list:
-            break
+            ship_list.append(Game(ship_info['size'], ship_info['orientation'], ship_info['location']))
+            count += 1
+    del count
 
-# End the Game
-if ship_list:
-    print("You lose...")
-else:
-    print("You sunk all the ships! You win!")
-    initials = input("Enter your initials (3 characters): ").strip().upper()[:3]
-    scoreboard.add_score(initials, i + 1)
-    scoreboard.display()
+    # Play the Game
+    os.system('clear')
+    print_board(board_display)
+
+    for i in range(num_turns):
+        print("Turn:", i + 1, "of", num_turns)
+        print("Ships left:", len(ship_list))
+        print()
+
+        coords = {}
+        while True:
+            coords['row'] = get_row()
+            coords['col'] = get_col() 
+            if board_display[coords['row']][coords['col']] == 'X':
+                print("You already missed at that space!")
+            elif board_display[coords['row']][coords['col']] == '*':
+                print("You already hit that space!")
+            else:
+                break
+        os.system('clear')
+        ship_hit = False
+        for s in ship_list:
+            if s.contains(coords):
+                print("Hit!")
+                ship_hit = True
+                board_display[coords['row']][coords['col']] = 'X'
+                if s.destroyed():
+                    print("Ship was destroyed!")
+                    ship_list.remove(s)
+                break
+            if not ship_hit:
+                board_display[coords['row']][coords['col']] = '*'
+                print("You missed!")
+            print_board(board_display)
+            if not ship_list:
+                break
+
+    # End the Game
+    if ship_list:
+        print("You lose...")
+    else:
+        print("You sunk all the ships! You win!")
+        initials = input("Enter your initials (3 characters): ").strip().upper()[:3]
+        scoreboard.add_score(initials, i + 1)
+        scoreboard.display()
