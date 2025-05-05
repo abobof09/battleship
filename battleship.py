@@ -40,7 +40,7 @@ class Game:
                     raise IndexError("Row does not exist.")
         if self.filled():
             print_board(board)
-            print(" ".join(str(coords) for coords in self.coordinates))
+            print(" ".join(str(coords) for coords in self.coords))
             raise IndexError("A ship already occupies that space.")
         else:
             self.fill_board()
@@ -49,7 +49,7 @@ class Game:
         """
         A method to check if the board has been properly filled.
         """
-        for coords in self.coordinates:
+        for coords in self.coords:
             if board[coords['row']][coords['col']] == 1:
                 return True
         return False
@@ -58,24 +58,24 @@ class Game:
         """
         A method to generate a fresh board.
         """
-        for coords in self.coordinates:
+        for coords in self.coords:
             board[coords['row']][coords['col']] = 1
         
     def does_contain(self, location):
         """
-        A method to check coordinates on the board.
+        A method to check coords on the board.
         Args:
             location: the specified location
         Returns:
             true or false
         """
-        for coords in self.coordinates:
+        for coords in self.coords:
             if coords == location:
                 return True
         return False
   
     def destroyed(self):
-        for coords in self.coordinates:
+        for coords in self.coords:
             if board_display[coords['row']][coords['col']] == 'O':
                 return False
             elif board_display[coords['row']][coords['col']] == '*':
@@ -147,7 +147,7 @@ def print_board(board):
         print(str(r + 1) + " " + " ".join(str(c) for c in board[r]))
     print()
 
-def search_coordinates(size, direction):
+def search_coords(size, direction):
     """
     A function that looks for valid spots for a ship to be placed.
     Args:
@@ -155,7 +155,7 @@ def search_coordinates(size, direction):
         direction: the direction the ship is facing (seen in the Game class)
     Returns:
         None: if there is no valid location
-        locations: a list containing the coordinates of the viable locations
+        locations: a list containing the coords of the viable locations
     """
     locations = []
 
@@ -231,29 +231,29 @@ for i in range(num_turns):
     print("Ships left:", len(ship_list))
     print()
 
-    coordinates = {}
+    coords = {}
     while True:
-        coordinates['row'] = get_row()
-        coordinates['col'] = get_col() 
-        if board_display[coordinates['row']][coordinates['col']] == 'X':
+        coords['row'] = get_row()
+        coords['col'] = get_col() 
+        if board_display[coords['row']][coords['col']] == 'X':
             print("You already missed at that space!")
-        elif board_display[coordinates['row']][coordinates['col']] == '*':
+        elif board_display[coords['row']][coords['col']] == '*':
             print("You already hit that space!")
         else:
             break
     os.system('clear')
     ship_hit = False
     for s in ship_list:
-        if s.contains(coordinates):
+        if s.contains(coords):
             print("Hit!")
             ship_hit = True
-            board_display[coordinates['row']][coordinates['col']] = 'X'
+            board_display[coords['row']][coords['col']] = 'X'
             if s.destroyed():
                 print("Ship was destroyed!")
                 ship_list.remove(s)
             break
         if not ship_hit:
-            board_display[coordinates['row']][coordinates['col']] = '*'
+            board_display[coords['row']][coords['col']] = '*'
             print("You missed!")
         print_board(board_display)
         if not ship_list:
