@@ -8,8 +8,8 @@ class TestMethods(unittest.TestCase):
         """
         self.num_rows = 9
         self.num_cols = 9
-        self.board = [[0 for _ in range(num_rows)] for _ in range(num_cols)]
-        self.board_display = [["O" for _ in range(num_rows)] for _ in range(num_cols)]
+        self.board = [[0 for _ in range(self.num_rows)] for _ in range(self.num_cols)]
+        self.board_display = [["O" for _ in range(self.num_rows)] for _ in range(self.num_cols)]
 
     def test_horizontal_ship_creation(self):
         ship = Game(3, 'horizontal', {'row': 2, 'col': 1})
