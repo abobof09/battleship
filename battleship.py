@@ -26,8 +26,8 @@ class Game:
                         self.coords.append({'row': location['row'], 'col': location['col'] + x})
                     else:
                         raise IndexError("The column does not exist.")
-                else:
-                    raise IndexError("The row does not exist.")
+            else:
+                raise IndexError("The row does not exist.")
         elif direction.lower() == "vertical":
             if location['col'] in num_rows:
                 self.coords = []
@@ -36,8 +36,8 @@ class Game:
                         self.coords.append({'row': location['row'] + x, 'col': location['col']})
                     else:
                         raise IndexError("Column does not exist.")
-                else:
-                    raise IndexError("Row does not exist.")
+            else:
+                raise IndexError("Row does not exist.")
         if self.filled():
             print_board(board)
             print(" ".join(str(coords) for coords in self.coords))
@@ -186,7 +186,7 @@ def random_location():
     if locations == 'None':
         return 'None'
     else:
-        return {'location': locations[randint(0, len(locations) - 1)], 'size': size,\
+        return {'location': locations[randint(0, len(locations) - 1)], 'size': size,
                 'orientation': orientation}
     
 def get_row():
