@@ -50,7 +50,7 @@ class Game:
         A method to check if the board has been properly filled.
         """
         for coords in self.coords:
-            if board[coords['row']][coords['col']] == 1:
+            if board[coords['row']][coords['col']] != 0:
                 return True
         return False
   

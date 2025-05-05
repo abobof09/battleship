@@ -28,9 +28,17 @@ class TestMethods(unittest.TestCase):
         ]
         self.assertEqual(ship.coords, expected_coords)
 
-    def test_filled_returns_false_on_empty(self):
-        ship = Game(2, 'horizontal', {'row': 0, 'col': 0})
-        self.assertFalse(ship.filled())
+    def test_filled_returns_true_on_empty(self):
+        ship = Game(2, 'horizontal', {'row': 4, 'col': 5})
+        self.assertTrue(ship.filled())
+
+    def test_does_contain_true(self):
+        ship = Game(3, 'vertical', {'row': 1, 'col': 1})
+        self.assertTrue(ship.does_contain({'row': 2, 'col': 1}))
+
+    def test_does_contain_false(self):
+        ship = Game(3, 'horizontal', {'row': 0, 'col': 0})
+        self.assertFalse(ship.does_contain({'row': 1, 'col': 0}))
 
 if __name__ == "__main__":
     unittest.main()
