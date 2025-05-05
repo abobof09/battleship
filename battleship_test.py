@@ -20,3 +20,6 @@ class TestMethods(unittest.TestCase):
             {'row': 2, 'col': 3}
         ]
         self.assertEqual(ship.coords, expected_coords)
+
+if __name__ == "__main__":
+    unittest.main()
