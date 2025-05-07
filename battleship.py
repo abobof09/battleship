@@ -180,7 +180,7 @@ class Battleship:
         size = randint(self.min_ship_size, self.max_ship_size)
         orientation = 'horizontal' if randint(0, 1) == 0 else 'vertical'
         locations = self.search_coords(size, orientation)
-        if locations == 'None':
+        if locations == None:
             return 'None'
         else:
             return {'location': locations[randint(0, len(locations) - 1)], 'size': size,
@@ -194,7 +194,7 @@ class Battleship:
         while count < self.num_ships:
             ship_info = self.random_location()
             if ship_info:
-                self.ship_list.append(Game(ship_info['size'], ship_info['orientation'], ship_info['location']))
+                self.ship_list.append(Game(self, ship_info['size'], ship_info['orientation'], ship_info['location']))
                 count += 1
 
     def get_row(self):
