@@ -3,7 +3,7 @@ import os
 import json
 
 class Game:
-    def __init__(self, size, direction, location):
+    def __init__(self, game, size, direction, location):
         """
         Initialize the Game class with logic attributes.
         Args:
@@ -11,6 +11,7 @@ class Game:
             direction: the direction the ship(s) are facing
             location: the starting coordinate of the ship(s)
         """
+        self.game = game
         self.size = size
         if direction.lower() == "horizontal" or direction.lower() == "vertical":
             self.direction = direction
@@ -19,27 +20,27 @@ class Game:
         
         # Properly orient the ships based on the parameters
         if direction.lower() == "horizontal":
-            if location['row'] in range(num_cols):
+            if location['row'] in range(self.game.num_cols):
                 self.coords = []
                 for x in range(size):
-                    if location['col'] + x in range(num_rows):
+                    if location['col'] + x in range(self.game.num_rows):
                         self.coords.append({'row': location['row'], 'col': location['col'] + x})
                     else:
                         raise IndexError("The column does not exist.")
             else:
                 raise IndexError("The row does not exist.")
         elif direction.lower() == "vertical":
-            if location['col'] in range(num_rows):
+            if location['col'] in range(self.game.num_rows):
                 self.coords = []
                 for x in range(size):
-                    if location['row'] + x in range(num_cols):
+                    if location['row'] + x in range(self.game.num_cols):
                         self.coords.append({'row': location['row'] + x, 'col': location['col']})
                     else:
                         raise IndexError("Column does not exist.")
             else:
                 raise IndexError("Row does not exist.")
         if self.filled():
-            print_board(board)
+            self.game.print_board(self.game.board)
             print(" ".join(str(coords) for coords in self.coords))
             raise IndexError("A ship already occupies that space.")
         else:
@@ -50,7 +51,7 @@ class Game:
         A method to check if the board has been properly filled.
         """
         for coords in self.coords:
-            if board[coords['row']][coords['col']] != 0:
+            if self.game.board[coords['row']][coords['col']] != 0:
                 return True
         return False
   
@@ -59,7 +60,7 @@ class Game:
         A method to generate a fresh board.
         """
         for coords in self.coords:
-            self.board[coords['row']][coords['col']] = 1
+            self.game.board[coords['row']][coords['col']] = 1
         
     def does_contain(self, location):
         """
@@ -76,9 +77,9 @@ class Game:
   
     def destroyed(self):
         for coords in self.coords:
-            if self.board_display[coords['row']][coords['col']] == 'O':
+            if self.game.board_display[coords['row']][coords['col']] == 'O':
                 return False
-            elif self.board_display[coords['row']][coords['col']] == '*':
+            elif self.game.board_display[coords['row']][coords['col']] == '*':
                 raise RuntimeError("Board display inaccurate.")
         return True
 
