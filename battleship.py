@@ -194,7 +194,7 @@ class Battleship:
         while count < self.num_ships:
             ship_info = self.random_location()
             if ship_info:
-                self.ship_list.append(Game(self, ship_info['size'], ship_info['orientation'], ship_info['location']))
+                self.ship_list.append(ShipLogic(self, ship_info['size'], ship_info['orientation'], ship_info['location']))
                 count += 1
 
     def get_row(self):
