@@ -2,7 +2,7 @@ from random import randint # Will allow randomized ship placements
 import os
 import json
 
-class Game:
+class ShipLogic:
     def __init__(self, game, size, direction, location):
         """
         Initialize the Game class with logic attributes.
